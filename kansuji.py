@@ -33,9 +33,30 @@ units_small =   [
     { 'CHAR': '',   'UNIT': 10 ** 0, },
 ]
 
-def helper_small(number):
+def helper_large(number):
     """
         helper_large
+    """
+    if  number == 0:
+        return  ''
+    
+    for unit in units_large:
+        if  number  <   unit['UNIT']:
+            continue
+
+        upper   =   helper_small( number // unit['UNIT'] )
+        
+        lower   =   helper_large( number %  unit['UNIT'] )
+        unit_char   =   unit['CHAR']
+        
+        return  '{upper}{unit_char}{lower}'.format(
+                upper=upper, unit_char=unit_char, lower=lower )
+    
+    raise   ValueError("number='{number}' is invalid.".format( number=number ))
+
+def helper_small(number):
+    """
+        helper_small
     """
     if  number == 0:
         return  ''
@@ -65,7 +86,7 @@ if __name__ == '__main__':
 
     num =   int(sys.argv[1])
     
-    print(helper_small(num))
+    print(helper_large(num))
     
     
     
